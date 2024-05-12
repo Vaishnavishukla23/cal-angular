@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>AngularJS Calculator</title>
+  <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular.min.js"></script>
+</head>
+
+<body ng-app="calculatorApp" ng-controller="CalculatorController">
+  <p style="color: rgb(195, 6, 103); font-size: larger;">
+    <a href="#" ng-click="showCalculator = true">Click here to open the Calculator</a>
+  </p>
+
+  <div ng-show="showCalculator">
+    <h2>Calculator</h2>
+    <div>
+      <input type="number" ng-model="num1" placeholder="Enter first number">
+      <select ng-model="operator">
+        <option value="+">+</option>
+        <option value="-">-</option>
+        <option value=""></option>
+        <option value="/">/</option>
+      </select>
+      <input type="number" ng-model="num2" placeholder="Enter second number">
+      <button ng-click="calculate()">Calculate</button>
+      <p>Result: {{ result }}</p>
+    </div>
+  </div>
+
+  <script>
+    var app = angular.module("calculatorApp", []);
+
+    app.controller('CalculatorController', function($scope) {
+      $scope.showCalculator = false;
+
+      $scope.calculate = function() {
+        var num1 = parseFloat($scope.num1);
+        var num2 = parseFloat($scope.num2);
+        var operator = $scope.operator;
+        var result;
+
+        switch(operator) {
+          case '+':
+            result = num1 + num2;
+            break;
+          case '-':
+            result = num1 - num2;
+            break;
+          case '*':
+            result = num1 * num2;
+            break;
+          case '/':
+            if(num2 !== 0) {
+              result = num1 / num2;
+            } else {
+              result = 'Cannot divide by zero';
+            }
+            break;
+          default:
+            result = 'Invalid operator';
+        }
+
+        $scope.result = result;
+      };
+    });
+  </script>
+
+</body>
+</html>
